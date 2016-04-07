@@ -24,6 +24,11 @@ class CheckoutTest extends WordSpec with Matchers {
                val result = checkout.price(items)
                result should be (Bad(One("unknown fruit plum")))
           }
+          "produce a compound error message" in new CheckoutFixture {
+               val items = List("plum","plum",null,"apple")
+               val result = checkout.price(items)
+               result should be (Bad(Many("unknown fruit plum","null is not a valid item")))
+          }
           "generate a valid price" in new CheckoutFixture {
                val items = List("apple","orange")
                val result = checkout.price(items)
