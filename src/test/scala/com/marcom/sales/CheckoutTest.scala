@@ -14,15 +14,15 @@ class CheckoutTest extends WordSpec with Matchers {
                val result = checkout.price(items)
                result should be (Bad(One("the list of items must not be null")))
           }
-          "produce error on empty list" in new CheckoutFixture {
+          "produce zero on empty list" in new CheckoutFixture {
                val items = List[String]()
                val result = checkout.price(items)
-               result should be (Bad(One("the list of items must not be empty")))
+               result should be (Good(0))
           }
           "produce error on an invalid item" in new CheckoutFixture {
                val items = List("plum")
                val result = checkout.price(items)
-               result should be (Bad(One("the list contains invalid items")))
+               result should be (Bad(One("unknown fruit plum")))
           }
           "generate a valid price" in new CheckoutFixture {
                val items = List("apple","orange")
